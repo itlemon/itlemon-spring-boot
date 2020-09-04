@@ -14,6 +14,14 @@
 编译请执行： ../mvnw clean package -DskipTests -Pfast(其中package可以换成compile、install等命令，测试项目一般不install)
 清除请执行： ../mvnw clean
 ----
+
+=== 关于编译的一些问题
+----
+如果出现  java: 服务配置文件不正确, 或构造处理程序对象javax.annotation.processing.Processor: Provider org.springframework.boot.configurationprocessor.ConfigurationMetadataAnnotationProcessor not found时抛出异常错误  问题，在spring-boot-configuration-processor项目的pom文件的maven-compiler-plugin插件的<configuration></configuration>里面加入如下配置：
+
+<!-- 解决AnnotationProcessor not found问题 -->
+<compilerArgument>-proc:none</compilerArgument>
+----
 Spring Boot makes it easy to create Spring-powered, production-grade applications and
 services with absolute minimum fuss. It takes an opinionated view of the Spring platform
 so that new and existing users can quickly get to the bits they need.
