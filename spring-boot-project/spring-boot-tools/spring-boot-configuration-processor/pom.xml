@@ -44,6 +44,8 @@
 				<configuration>
 					<!-- Ensure own annotation processor doesn't kick in -->
 					<proc>none</proc>
+					<!-- 解决AnnotationProcessor not found问题 -->
+					<compilerArgument>-proc:none</compilerArgument>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -2,6 +2,26 @@
 :docs: https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference
 :github: https://github.com/spring-projects/spring-boot
 
+== 编译项目
+----
+// 进入到itlemon-spring-boot目录下，编译spring-boot-project
+执行： mvn -N io.takari:maven:wrapper(后期编译无需再次执行)
+编译请执行： ./mvnw clean install -DskipTests -Pfast(其中install可以换成compile、package等命令)
+清除请执行： ./mvnw clean
+
+// 编译spring-boot-test使用spring-boot-tests项目
+// 进入到spring-boot-tests项目的pom文件中，所有test模块添加到modules标签中，方便统一编译
+编译请执行： ../mvnw clean package -DskipTests -Pfast(其中package可以换成compile、install等命令，测试项目一般不install)
+清除请执行： ../mvnw clean
+----
+
+=== 关于编译的一些问题
+----
+如果出现  java: 服务配置文件不正确, 或构造处理程序对象javax.annotation.processing.Processor: Provider org.springframework.boot.configurationprocessor.ConfigurationMetadataAnnotationProcessor not found时抛出异常错误  问题，在spring-boot-configuration-processor项目的pom文件的maven-compiler-plugin插件的<configuration></configuration>里面加入如下配置：
+
+<!-- 解决AnnotationProcessor not found问题 -->
+<compilerArgument>-proc:none</compilerArgument>
+----
 Spring Boot makes it easy to create Spring-powered, production-grade applications and
 services with absolute minimum fuss. It takes an opinionated view of the Spring platform
 so that new and existing users can quickly get to the bits they need.

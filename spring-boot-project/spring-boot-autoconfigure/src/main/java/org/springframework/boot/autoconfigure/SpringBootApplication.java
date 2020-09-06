@@ -56,6 +56,7 @@ import org.springframework.data.repository.Repository;
 public @interface SpringBootApplication {
 
 	/**
+	 * 排除指定自动配置类
 	 * Exclude specific auto-configuration classes such that they will never be applied.
 	 * @return the classes to exclude
 	 */
@@ -63,6 +64,7 @@ public @interface SpringBootApplication {
 	Class<?>[] exclude() default {};
 
 	/**
+	 * 排除指定自动配置类名
 	 * Exclude specific auto-configuration class names such that they will never be
 	 * applied.
 	 * @return the class names to exclude
@@ -72,6 +74,7 @@ public @interface SpringBootApplication {
 	String[] excludeName() default {};
 
 	/**
+	 * 指定扫描的基础包，激活注解组件的初始化
 	 * Base packages to scan for annotated components. Use {@link #scanBasePackageClasses}
 	 * for a type-safe alternative to String-based package names.
 	 * <p>
@@ -87,6 +90,7 @@ public @interface SpringBootApplication {
 	String[] scanBasePackages() default {};
 
 	/**
+	 * 指定扫描的类，用于初始化
 	 * Type-safe alternative to {@link #scanBasePackages} for specifying the packages to
 	 * scan for annotated components. The package of each class specified will be scanned.
 	 * <p>
@@ -105,6 +109,7 @@ public @interface SpringBootApplication {
 	Class<?>[] scanBasePackageClasses() default {};
 
 	/**
+	 * 指定是否代理{@link Bean}方法以强制执行bean的生命周期行为，默认为true
 	 * Specify whether {@link Bean @Bean} methods should get proxied in order to enforce
 	 * bean lifecycle behavior, e.g. to return shared singleton bean instances even in
 	 * case of direct {@code @Bean} method calls in user code. This feature requires
