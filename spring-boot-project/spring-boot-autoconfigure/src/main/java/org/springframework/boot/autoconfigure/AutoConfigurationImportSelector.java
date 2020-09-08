@@ -98,13 +98,18 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
      */
     @Override
     public String[] selectImports(AnnotationMetadata annotationMetadata) {
+        // 检查自动配置功能是否开启，默认为开启状态
         if (!isEnabled(annotationMetadata)) {
+            // 如果没有开启自动配置，将返回空的字符串数组，表明将不会自动配置任何类
             return NO_IMPORTS;
         }
+        // 加载自动配置的元信息，配置文件为classpath下的META-INF目录下的spring-autoconfigure-metadata.properties文件
         AutoConfigurationMetadata autoConfigurationMetadata = AutoConfigurationMetadataLoader
                 .loadMetadata(this.beanClassLoader);
+        // 封装将被引入的自动配置信息
         AutoConfigurationEntry autoConfigurationEntry = getAutoConfigurationEntry(autoConfigurationMetadata,
                 annotationMetadata);
+        // 返回符合条件的配置类的全限定名数组
         return StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());
     }
 
@@ -118,10 +123,16 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
      */
     protected AutoConfigurationEntry getAutoConfigurationEntry(AutoConfigurationMetadata autoConfigurationMetadata,
             AnnotationMetadata annotationMetadata) {
+        // 检查自动配置功能是否开启，默认为开启状态
         if (!isEnabled(annotationMetadata)) {
+            // 如果没有开启自动配置，将返回AutoConfigurationEntry对象，内部属性全部为空
             return EMPTY_ENTRY;
         }
+        // 加载AnnotationMetadata中的属性
         AnnotationAttributes attributes = getAttributes(annotationMetadata);
+        // 在方法getCandidateConfigurations通过SpringFactoriesLoader类提供的方法加载类路径中META-INF目录下的
+        // spring.factories文件中针对EnableAutoConfiguration的注册配置类，获取到以EnableAutoConfiguration全限定
+        // 名称为key，
         List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes);
         configurations = removeDuplicates(configurations);
         Set<String> exclusions = getExclusions(annotationMetadata, attributes);
@@ -153,6 +164,7 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
      * @return annotation attributes
      */
     protected AnnotationAttributes getAttributes(AnnotationMetadata metadata) {
+        // 返回使用当前Selector的注解的全限定名称
         String name = getAnnotationClass().getName();
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(metadata.getAnnotationAttributes(name, true));
         Assert.notNull(attributes, () -> "No auto-configuration attributes found. Is " + metadata.getClassName()
@@ -161,6 +173,7 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
     }
 
     /**
+     * 返回使用当前Selector的注解
      * Return the source annotation class used by the selector.
      *
      * @return the annotation class
