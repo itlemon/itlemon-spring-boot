@@ -148,6 +148,12 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
         return AutoConfigurationGroup.class;
     }
 
+    /**
+     * 如果在配置文件中配置了spring.boot.enableautoconfiguration=false，该方法将返回false
+     *
+     * @param metadata 注解元信息
+     * @return 是否开启自动配置
+     */
     protected boolean isEnabled(AnnotationMetadata metadata) {
         if (getClass() == AutoConfigurationImportSelector.class) {
             return getEnvironment().getProperty(EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY, Boolean.class, true);
